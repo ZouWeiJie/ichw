@@ -1,3 +1,10 @@
+"""currency.py: 测试汇率兑换数据
+__currency_to = "目标货币”
+__currency_to = "原始货币"
+__amount_from = "原始货币数值“
+"""
+       
+    
 def exchange(currency_from,currency_to,amount_from):
     """Returns: amount of currency received in the given exchange.
 
@@ -58,4 +65,13 @@ def testAll():
     test_amount_from()
     print("All tests passed")
 
-testAll()
+
+def main():
+    """测试并给出数据"""
+    testAll()
+    print(exchange(input('currency_from:',),input('currency_to:',),input('amount_to:',)))
+
+if __name__ == '__main__':
+    main()
+
+
