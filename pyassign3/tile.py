@@ -8,6 +8,14 @@ def pave(m, a, b, x, y, wall, s, ans):
     """在m*n的墙上铺一块
     a*b的砖块（从坐标（x，y）开始）
     并对砖块所覆盖的方块进行标记，记号为'1'
+    m: 墙的长度
+    a: 砖块的长度
+    b: 砖块的宽度
+    x: 被铺瓷砖序号最小对应的横坐标
+    y: 被铺瓷砖序号最小对应的纵坐标
+    wall: 记录墙上每个方块的状态，已铺为1，未铺为0
+    s: 新铺瓷砖的所有序列号组成的列表
+    ans: 一种铺的方法
     """
     for i in range(y, y + b):
         for j in range(x, x + a):
@@ -19,7 +27,14 @@ def pave(m, a, b, x, y, wall, s, ans):
 def conflict(m, n, a, b, x, y, wall):
     """定义冲突函数，
     若不冲突则可横向铺一块砖
-    铺过的标记为1，未铺过标记为0    
+    铺过的标记为1，未铺过标记为0
+    m: 墙的长度
+    n: 墙的宽度
+    a: 砖块的长度
+    b: 砖块的宽度
+    x: 被铺瓷砖序号最小对应的横坐标
+    y: 被铺瓷砖序号最小对应的纵坐标
+    wall: 记录墙上每个方块的状态，已铺为1，未铺为0
     """
     if y + b <= n and x + a <= m:
         for i in range(y, y + b):
@@ -38,6 +53,13 @@ def tile(m, n, a, b, wall, alls=[], ans=[], x=0, y=0):
     a为砖长，b为砖宽
     ans中储存每一种铺法的砖块坐标
     alls中储存所有铺法的砖块坐标
+    m: 墙的长度
+    n: 墙的宽度
+    a: 砖块的长度
+    b: 砖块的宽度
+    wall: 记录墙上每个方块的状态，已铺为1，未铺为0
+    alls: 所有铺砖方法
+    ans: 一种铺的方法
     """
     s = []
     if a == b:
@@ -83,8 +105,11 @@ def tile(m, n, a, b, wall, alls=[], ans=[], x=0, y=0):
 
 
 def draw(m, n, method):
-    """使用wugui turtle来进行铺砖方式的可视化
-
+    """使用wugui_1 turtle来进行铺砖方式的可视化
+    使用wugui_2 turtle来画出墙的网格
+    m: 墙的长度
+    n: 墙的宽度
+    method: 用户所选择的进行可视化的铺砖方法
     """
   
     wugui_1 = turtle.Turtle()
@@ -112,9 +137,9 @@ def draw(m, n, method):
 
 
 
-    for i in method:
-        r = max(i)
-        g = min(i)
+    for partition in method:
+        r = max(partition)
+        g = min(partition)
         wugui_1.up()
         x_min = 2 * (g % m) * t - m * t
         y_min = 2 * (g // m) * t - n * t
@@ -144,3 +169,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
