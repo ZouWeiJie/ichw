@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """wcount.py: count words from an Internet file.
 
 __author__ = "Weijie Zhou"
@@ -7,7 +9,7 @@ __email__  = "1800013256@pku.edu.cn"
 
 import sys
 import urllib.request
-import collections
+
 
 def wcount(lines, topn=10):
     """count words from lines of text string, then sort by their counts
@@ -18,12 +20,21 @@ def wcount(lines, topn=10):
         lines = lines.replace(i," ")
     words = lines.split()
     
-    word = collections.Counter(words)
-    word_list = word.most_common(topn)
-    for i in word_list:
-        print('{0}\t{1}'.format(i[0],i[1]))
+    counts = {}
+    for i in words:
+        counts[i] = counts.get(i, 0) + 1
+    s = sorted(counts.items(), key=lambda x: x[1], reverse=True)
+    lst = []
+    if topn > len(s):
+        topn = len(s)
+    for j in range(topn):
+        lst.append(s[j])
+    for (a, b) in lst:
+        print(a + '\t', b)
     
   
+
+
 if __name__ == '__main__':
 
     if len(sys.argv) == 1:
@@ -32,14 +43,14 @@ if __name__ == '__main__':
         print('  topn: how many (words count) to output. If not given, will output top 10 words')
         sys.exit(1)
     try:
-        passage = urlopen(url)
-        lines = passage.read().decode()
-        passage.close()
-    except Exception as err:
-        print(err)
-    else:
-        topn = int(sys.argv[2])
-        if len(sys.argv) == 2:
-            wcount(lines)
+        url = sys.argv[1]
+        text = urlopen(url)
+        lines = text.read().decode()
+        text.close()
+        if len(sys.argv) >= 3:
+            topn = int(sys.argv[2])
+            wcount(lines, topn)
         else:
-            wcount(lines,topn)
+            wcount(lines)
+    except Exception as error:
+        print(error)
